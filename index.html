@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hello, World</title>
+  <meta name="description" content="A sleek, softly feminine Hello World page.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23c2577a' d='M6 0 L7.4 4.6 L12 6 L7.4 7.4 L6 12 L4.6 7.4 L0 6 L4.6 4.6 Z'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap">
+  <style>
+    /* Layout: one quiet centered card on a softly glowing blush field; serif italic carries the voice. */
+    :root {
+      --bg: #fbf5f6;
+      --bg-glow-1: #f6d9e0;
+      --bg-glow-2: #efe0f0;
+      --card: rgba(255, 255, 255, 0.62);
+      --card-edge: rgba(201, 140, 160, 0.28);
+      --ink: #3a2530;
+      --ink-soft: #8a6c78;
+      --rose: #c2577a;
+      --font-display: "Instrument Serif", "Didot", "Bodoni 72", Georgia, serif;
+      --font-body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1218;
+        --bg-glow-1: #4a2333;
+        --bg-glow-2: #33223f;
+        --card: rgba(40, 26, 34, 0.55);
+        --card-edge: rgba(232, 160, 186, 0.22);
+        --ink: #f7e8ee;
+        --ink-soft: #c4a3b1;
+        --rose: #ee9ab6;
+        color-scheme: dark;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      display: grid;
+      place-items: center;
+      padding-block: 32px;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Soft drifting glows */
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow.one {
+      width: 46vmax; height: 46vmax;
+      background: var(--bg-glow-1);
+      top: -14vmax; left: -10vmax;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .glow.two {
+      width: 40vmax; height: 40vmax;
+      background: var(--bg-glow-2);
+      bottom: -14vmax; right: -8vmax;
+      animation: drift 22s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(4vmax, 3vmax) scale(1.08); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      padding: clamp(40px, 8vw, 72px) clamp(24px, 6vw, 64px);
+      background: var(--card);
+      border: 1px solid var(--card-edge);
+      border-radius: 28px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(3.4rem, 13vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .flourish {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--rose);
+    }
+    .flourish span {
+      display: block;
+      width: 44px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+    .flourish svg { width: 12px; height: 12px; fill: currentColor; }
+
+    p.note {
+      margin: 0;
+      max-width: 32ch;
+      font-size: 1.02rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+
+    .load { animation: rise 1.1s cubic-bezier(.2,.7,.2,1) both; }
+    .load.d2 { animation-delay: .12s; }
+    .load.d3 { animation-delay: .24s; }
+    .load.d4 { animation-delay: .36s; }
+    @keyframes rise {
+      from { transform: translateY(10px); opacity: .001; }
+      to   { transform: none; opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow, .load { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow one" aria-hidden="true"></div>
+  <div class="glow two" aria-hidden="true"></div>
+
+  <main class="card">
+    <p class="eyebrow load">A first hello</p>
+    <h1 class="load d2"><em>Hello,</em> World</h1>
+    <div class="flourish load d3" aria-hidden="true">
+      <span></span>
+      <svg viewBox="0 0 12 12"><path d="M6 0 L7.4 4.6 L12 6 L7.4 7.4 L6 12 L4.6 7.4 L0 6 L4.6 4.6 Z"/></svg>
+      <span></span>
+    </div>
+    <p class="note load d4">Every story starts with a single line. This is ours.</p>
+  </main>
+</body>
+</html>
