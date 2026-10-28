@@ -10,12 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap">
   <style>
-    /* Layout: one quiet centered card on a softly glowing blush field; serif italic carries the voice. */
+    /* Layout: one quiet centered card over a slow pastel lava-lamp field; serif italic carries the voice. */
     :root {
       --bg: #fbf5f6;
-      --bg-glow-1: #f6d9e0;
-      --bg-glow-2: #efe0f0;
-      --card: rgba(255, 255, 255, 0.62);
+      --blob-rose: #f3b3c6;
+      --blob-peach: #f9cfb6;
+      --blob-lilac: #d8c3f0;
+      --blob-pink: #f6c4de;
+      --blob-blush: #fbd9dd;
+      --card: rgba(255, 255, 255, 0.58);
       --card-edge: rgba(201, 140, 160, 0.28);
       --ink: #3a2530;
       --ink-soft: #8a6c78;
@@ -27,9 +30,12 @@
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #1c1218;
-        --bg-glow-1: #4a2333;
-        --bg-glow-2: #33223f;
-        --card: rgba(40, 26, 34, 0.55);
+        --blob-rose: #7a2e4c;
+        --blob-peach: #7a3d3a;
+        --blob-lilac: #4b2f6e;
+        --blob-pink: #6d2d5e;
+        --blob-blush: #5a2a3c;
+        --card: rgba(40, 26, 34, 0.5);
         --card-edge: rgba(232, 160, 186, 0.22);
         --ink: #f7e8ee;
         --ink-soft: #c4a3b1;
@@ -54,30 +60,86 @@
       position: relative;
     }
 
-    /* Soft drifting glows */
-    .glow {
+    /* Lava lamp: soft blobs that wander, swell and change shape, blurred together */
+    .lava {
       position: fixed;
-      border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.9;
-      pointer-events: none;
+      inset: -10vmax;
       z-index: 0;
+      pointer-events: none;
+      filter: blur(60px) saturate(1.15);
+      animation: lamp-turn 90s linear infinite;
     }
-    .glow.one {
+    .blob {
+      position: absolute;
+      opacity: 0.85;
+      border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%;
+      will-change: transform, border-radius;
+    }
+    .blob.b1 {
+      width: 52vmax; height: 52vmax;
+      top: 0; left: 0;
+      background: var(--blob-rose);
+      animation: wander-a 26s ease-in-out infinite, morph 14s ease-in-out infinite;
+    }
+    .blob.b2 {
       width: 46vmax; height: 46vmax;
-      background: var(--bg-glow-1);
-      top: -14vmax; left: -10vmax;
-      animation: drift 18s ease-in-out infinite alternate;
+      bottom: 0; right: 0;
+      background: var(--blob-lilac);
+      animation: wander-b 32s ease-in-out infinite, morph 17s ease-in-out infinite reverse;
     }
-    .glow.two {
-      width: 40vmax; height: 40vmax;
-      background: var(--bg-glow-2);
-      bottom: -14vmax; right: -8vmax;
-      animation: drift 22s ease-in-out infinite alternate-reverse;
+    .blob.b3 {
+      width: 38vmax; height: 38vmax;
+      top: 30%; right: 8%;
+      background: var(--blob-peach);
+      animation: wander-c 29s ease-in-out infinite, morph 12s ease-in-out infinite;
     }
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(4vmax, 3vmax) scale(1.08); }
+    .blob.b4 {
+      width: 34vmax; height: 34vmax;
+      bottom: 6%; left: 12%;
+      background: var(--blob-pink);
+      animation: wander-d 36s ease-in-out infinite, morph 19s ease-in-out infinite reverse;
+    }
+    .blob.b5 {
+      width: 28vmax; height: 28vmax;
+      top: 38%; left: 38%;
+      background: var(--blob-blush);
+      animation: wander-e 22s ease-in-out infinite, morph 11s ease-in-out infinite;
+    }
+
+    @keyframes morph {
+      0%, 100% { border-radius: 42% 58% 63% 37% / 45% 40% 60% 55%; }
+      25%      { border-radius: 63% 37% 41% 59% / 58% 62% 38% 42%; }
+      50%      { border-radius: 36% 64% 52% 48% / 38% 55% 45% 62%; }
+      75%      { border-radius: 55% 45% 34% 66% / 62% 36% 64% 38%; }
+    }
+    @keyframes wander-a {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(28vmax, 18vmax) scale(1.12); }
+      66%      { transform: translate(8vmax, 34vmax) scale(0.92); }
+    }
+    @keyframes wander-b {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      30%      { transform: translate(-30vmax, -14vmax) scale(0.9); }
+      65%      { transform: translate(-12vmax, -32vmax) scale(1.15); }
+    }
+    @keyframes wander-c {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40%      { transform: translate(-26vmax, 20vmax) scale(1.18); }
+      70%      { transform: translate(-8vmax, -16vmax) scale(0.88); }
+    }
+    @keyframes wander-d {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      35%      { transform: translate(24vmax, -26vmax) scale(1.1); }
+      70%      { transform: translate(34vmax, 4vmax) scale(0.94); }
+    }
+    @keyframes wander-e {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25%      { transform: translate(-18vmax, -20vmax) scale(1.25); }
+      50%      { transform: translate(14vmax, -8vmax) scale(0.85); }
+      75%      { transform: translate(6vmax, 18vmax) scale(1.1); }
+    }
+    @keyframes lamp-turn {
+      to { transform: rotate(360deg); }
     }
 
     .card {
@@ -154,13 +216,18 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .glow, .load { animation: none; }
+      .lava, .blob, .load { animation: none; }
     }
   </style>
 </head>
 <body>
-  <div class="glow one" aria-hidden="true"></div>
-  <div class="glow two" aria-hidden="true"></div>
+  <div class="lava" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="blob b4"></div>
+    <div class="blob b5"></div>
+  </div>
 
   <main class="card">
     <p class="eyebrow load">A first hello</p>
